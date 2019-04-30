@@ -88,21 +88,97 @@
 
 Thread.java: Thread.getState() // Get thread states.  
 
-- New
+- New: Just created, before calling start() method.
 
 - Runnable (Including Running and Ready)
 
-- Blocked
+- Blocked: 
 
-- Waiting
+- Waiting: Thread is waiting, must be waken by another thread through notify or notifyAll method to invoke. 
 
-- Timed_waitting
+- Timed_waitting: timer(). 
 
-- Terminated 
+- Terminated: dead. 
 
+#4 New State and Terminate State of Thread
 
-- Video 08 ---
+## 4.1 New State
 
+Thread Class just creates an instance, but not calling the start method or run method. 
 
+When to execute: Thread instance calls start method. 
 
+start()
+Causes this thread to begin execution; the Java Virtual Machine calls the run method of this thread.
 
+Code Demo: 
+
+* Method 1: 
+
+```
+public class MyThread extends Thread {
+
+	public MyThread(String name) {
+		super(name);
+	}
+	
+	@Override
+	public void run() {
+		for(int i = 0; i < 10; i ++) {
+			System.out.println(getName() + " " + i);
+		}
+	}
+}
+
+public class TestDemo {
+	
+	public static void main(String[] args) {
+		System.out.println("-----Main Thread------");
+		// Create Thread Instance
+		MyThread mt = new MyThread("Frank - Created Thread");
+		// Start My Custom Thread
+		mt.run();
+		mt.start();
+		
+		for(int i = 0; i < 20; i ++) {
+			System.out.println("This is in main program	" + i);
+		}
+	}
+}
+
+```
+
+* Method 2: 
+
+```
+public class MyRunnable implements Runnable {
+
+	@Override
+	public void run() {
+		for(int i = 0; i < 20; i ++) {
+			System.out.println(Thread.currentThread().getName() + " " + i);
+		}
+	}
+
+}
+
+package com.liyiandxuegang.thread;
+
+public class TestDemo2 {
+	
+	public static void main(String[] args) {
+		System.out.println("This is Main Thread: ");
+		MyRunnable myRunnable = new MyRunnable();
+		// Create Thread
+		Thread thd1 = new Thread(myRunnable, "MyRun#1");
+		Thread thd2 = new Thread(myRunnable, "MyRun#2");
+		
+		thd1.start();
+		thd2.start();
+	}
+}
+```
+
+---From Code Level to understand how the two ways to create Thread and run the threads. 
+
+- Video 12
