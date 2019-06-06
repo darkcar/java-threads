@@ -1,4 +1,4 @@
-# 1. java-threads
+# Java-threads
 
 ## Java Threads Status Projects 
 
@@ -181,4 +181,85 @@ public class TestDemo2 {
 
 ---From Code Level to understand how the two ways to create Thread and run the threads. 
 
-- Video 12
+## 4.2 Terminated State
+
+Thread class: <b>start()</b> method
+
+```java
+void start(); // Causes this thread to begin execution; the Java Virtual Machine calls the run method of this thread.
+```
+
+```java
+#MyThread.java
+package com.liyiandxuegang.thread;
+
+public class MyThread extends Thread {
+
+	public MyThread(String name) {
+		super(name);
+	}
+	
+	@Override
+	public void run() {
+		for(int i = 0; i < 10; i ++) {
+			System.out.println(getName() + " " + i);
+		}
+	}
+}
+
+
+#TestDemo.java
+public class TestDemo {
+	
+	public static void main(String[] args) throws InterruptedException {
+		System.out.println("-----Main Thread------");
+		// Create Thread Instance
+		MyThread mt = new MyThread("Mt - Created Thread");
+		// Start My Custom Thread
+		mt.start();
+		
+		for(int i = 0; i < 20; i ++) {
+			System.out.println("This is in main program	" + i);
+		}
+	}
+}
+```
+
+The message in the console: 
+
+```text
+-----Main Thread------
+This is in main program	0
+This is in main program	1
+This is in main program	2
+Mt - Created Thread 0
+This is in main program	3
+This is in main program	4
+Mt - Created Thread 1
+This is in main program	5
+This is in main program	6
+This is in main program	7
+This is in main program	8
+Mt - Created Thread 2
+Mt - Created Thread 3
+Mt - Created Thread 4
+Mt - Created Thread 5
+Mt - Created Thread 6
+Mt - Created Thread 7
+Mt - Created Thread 8
+Mt - Created Thread 9
+This is in main program	9
+This is in main program	10
+This is in main program	11
+This is in main program	12
+This is in main program	13
+This is in main program	14
+This is in main program	15
+This is in main program	16
+This is in main program	17
+This is in main program	18
+This is in main program	19
+```
+
+![Two Threads](./images/twothreads.jpg)
+
